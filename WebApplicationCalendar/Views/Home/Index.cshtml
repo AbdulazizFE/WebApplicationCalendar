@@ -1,0 +1,52 @@
+﻿@using WebApplicationCalendar.Models
+@using System.Globalization;
+@model List<CalendarEvent>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+   @* <div class="text-center">
+        <button class="btn btn-primary" id="loginBtn" onclick="location.href = '@Url.Action("OauthRedirect" , "Auth")'">Sign In</button>
+        <button class="btn btn-primary" id="refreshBtn" onclick="location.href = '@Url.Action("RefreshToken" , "OAuth")'">Refresh Access Token</button>
+       <button class="btn btn-primary" onclick="location.href = '@Url.Action("AllEvents" , "Calendar")'">All Events</button>
+    </div>*@
+
+
+
+
+@if (Model.Count != 0)
+{
+    <div class="visitTitle">
+        <h5>Veckans besök</h5>
+        <img src="~/img/business-team.gif" />
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (CalendarEvent calendarEvent in Model)
+        {
+            <div class="col mb-2">
+                <div class="card w-100 h-100 cardDay bg-dark">
+                    <div class="card-body">
+                        <div class="dayTitle">
+                            <h5 class="card-title"> @(calendarEvent.Start.DateTime.ToString("dd MMMM").ToUpper()) </h5>
+                            <img src="~/img/calendar_icon.png" />
+                        </div>
+                        <ul>
+                            <li><span class="textTitle"><i class="bi bi-card-text"></i> Title : </span>@calendarEvent.Subject</li>
+                            <li><span class="clock-fill"><i class="bi bi-clock-fill"></i> Time :</span> @(calendarEvent.Start.DateTime.ToString("hh:mm tt")) -  @(calendarEvent.End.DateTime.ToString("hh:mm tt"))</li>
+                            <li><span class="body-text"><i class="bi bi-body-text"></i> Description :</span> @calendarEvent.body.Content</li>
+                            <li><span class="location"> <i class="bi bi-geo-alt-fill"></i> Location :</span> @calendarEvent.location.DisplayName</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div id="card">
+    </div>
+    <h1>NO EVENTS!</h1>
+    <div id="circle"></div>
+    <div id="rect"></div>
+}
